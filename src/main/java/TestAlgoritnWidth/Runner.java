@@ -12,7 +12,7 @@ public class Runner {
         graph.addVertex('G'); // 6
         graph.addVertex('P'); // 7
         graph.addVertex('D'); // 8
-        graph.addVertex('m'); // 9
+        graph.addVertex('V'); // 9
         graph.addVertex('K'); // 10
 
 
@@ -27,6 +27,7 @@ public class Runner {
 
 
 
-        graph.passInWidth(5);
+        graph.passInWidth(2);
+        graph.checkRoad(6);
     }
 }

@@ -1,5 +1,7 @@
 package TestAlgoritnWidth;
 
+import java.util.Arrays;
+
 public class Graph {
     public int maxN = 11;
     public int [][] matrix;
@@ -7,6 +9,8 @@ public class Graph {
     public int curN;
     private MyStack myStack = new MyStack();
     private MyQueue myQueue = new MyQueue();
+    private int [] dist = new int[maxN];
+    private int [] from = new int[maxN];
 
     public Graph() {
         vertexList = new Vertex[maxN];
@@ -30,7 +34,12 @@ public class Graph {
 
         return -1;
     }
+    private void fillDistGraph(){
+        Arrays.fill(dist,10000);
+    }
+
     public void passInDeep(int index){
+
         System.out.println(vertexList[index].name);
         vertexList[index].isVisited = true;
         myStack.push(index);
@@ -51,9 +60,14 @@ public class Graph {
         }
 
     }
+
     public void passInWidth(int index){
+        fillDistGraph();
+
         System.out.println(vertexList[index].name);
         vertexList[index].isVisited = true;
+        dist[index] = 0;
+        from[index] = -1;
         myQueue.insert(index);
 
         int vertex;
@@ -65,14 +79,27 @@ public class Graph {
             while ((vertex = check(temp)) != -1){
                 System.out.println(vertexList[vertex].name);
                 vertexList[vertex].isVisited = true;
+                dist[vertex] = dist[temp] + 1;
+                from[vertex] = temp;
                 myQueue.insert(vertex);
             }
+        }
+        for (int i = 0;i < curN;++i){
+            System.out.println(vertexList[i].name + " " + dist[i]);
         }
 
         for(int i = 0;i < curN; i++){
             vertexList[i].isVisited = false;
         }
 
+    }
+    public void checkRoad(int finish){
+        System.out.println("\n===========================\n");
+        while (from[finish] != -1) {
+
+            System.out.println(from[finish] + " " + vertexList[from[finish]].name);
+            finish = from[finish];
+        }
     }
 
 }
