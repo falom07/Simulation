@@ -24,6 +24,8 @@ public class Runner {
         graph.addEdge(4,10);
         graph.addEdge(10,7);
         graph.addEdge(10,1);
+        graph.addEdge(10,2);
+        graph.addEdge(10,3);
 
 
 

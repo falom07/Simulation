@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class Graph {
     public int maxN = 11;
     public int [][] matrix;
-    Vertex[] vertexList;
+    Vertexs[] vertexsList;
     public int curN;
     private MyStack myStack = new MyStack();
     private MyQueue myQueue = new MyQueue();
@@ -13,12 +13,12 @@ public class Graph {
     private int [] from = new int[maxN];
 
     public Graph() {
-        vertexList = new Vertex[maxN];
+        vertexsList = new Vertexs[maxN];
         matrix = new int [maxN][maxN];
         curN = 0;
     }
     public void addVertex(char name) {
-        vertexList[curN++] = new Vertex(name);
+        vertexsList[curN++] = new Vertexs(name);
     }
     public void addEdge(int start, int end) {
         matrix[start][end] = 1;
@@ -27,7 +27,7 @@ public class Graph {
     }
     public int check(int v){
         for(int i = 0; i < curN; i++){
-            if(matrix[i][v] == 1 && vertexList[i].isVisited == false){
+            if(matrix[i][v] == 1 && vertexsList[i].isVisited == false){
                 return i;
             }
         }
@@ -40,8 +40,8 @@ public class Graph {
 
     public void passInDeep(int index){
 
-        System.out.println(vertexList[index].name);
-        vertexList[index].isVisited = true;
+        System.out.println(vertexsList[index].name);
+        vertexsList[index].isVisited = true;
         myStack.push(index);
 
         while(!myStack.isEmpty()){
@@ -50,13 +50,13 @@ public class Graph {
             if(neigh == -1){
                 neigh = myStack.pop();
             }else {
-                System.out.println(vertexList[neigh].name);
-                vertexList[neigh].isVisited = true;
+                System.out.println(vertexsList[neigh].name);
+                vertexsList[neigh].isVisited = true;
                 myStack.push(neigh);
             }
         }
         for(int i = 0; i < curN; i++){
-            vertexList[i].isVisited = false;
+            vertexsList[i].isVisited = false;
         }
 
     }
@@ -64,8 +64,8 @@ public class Graph {
     public void passInWidth(int index){
         fillDistGraph();
 
-        System.out.println(vertexList[index].name);
-        vertexList[index].isVisited = true;
+        System.out.println(vertexsList[index].name);
+        vertexsList[index].isVisited = true;
         dist[index] = 0;
         from[index] = -1;
         myQueue.insert(index);
@@ -77,19 +77,25 @@ public class Graph {
 
 
             while ((vertex = check(temp)) != -1){
-                System.out.println(vertexList[vertex].name);
-                vertexList[vertex].isVisited = true;
+                System.out.println(vertexsList[vertex].name);
+                vertexsList[vertex].isVisited = true;
                 dist[vertex] = dist[temp] + 1;
                 from[vertex] = temp;
                 myQueue.insert(vertex);
             }
         }
         for (int i = 0;i < curN;++i){
-            System.out.println(vertexList[i].name + " " + dist[i]);
+            System.out.println(vertexsList[i].name + " " + dist[i]);
+        }
+        for (int j = 0; j < vertexsList.length; ++j){
+            for (int i = 0; i < vertexsList.length; ++i) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
         }
 
         for(int i = 0;i < curN; i++){
-            vertexList[i].isVisited = false;
+            vertexsList[i].isVisited = false;
         }
 
     }
@@ -97,7 +103,7 @@ public class Graph {
         System.out.println("\n===========================\n");
         while (from[finish] != -1) {
 
-            System.out.println(from[finish] + " " + vertexList[from[finish]].name);
+            System.out.println(from[finish] + " " + vertexsList[from[finish]].name);
             finish = from[finish];
         }
     }

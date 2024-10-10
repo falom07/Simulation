@@ -1,6 +1,12 @@
 package ActionAndMap;
 
 public class Action {
-    public void initAction(){};
-    public void turnAction(){};
+    private Map map = new Map();
+    public void initAction(){
+        map.createEntityForMap();
+    }
+    public void turnAction(){
+        map.showMap();
+    }
+
 }

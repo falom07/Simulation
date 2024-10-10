@@ -1,9 +1,9 @@
 package TestAlgoritnWidth;
 
-public class Vertex {
+public class Vertexs {
     public boolean isVisited;
     public char name;
-    public Vertex( char name) {
+    public Vertexs(char name) {
         this.name = name;
         isVisited = false;
     }
