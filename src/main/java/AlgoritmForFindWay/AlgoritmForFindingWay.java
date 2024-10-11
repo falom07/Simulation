@@ -5,12 +5,15 @@ public class AlgoritmForFindingWay { //todo delete all print
     public int [][] matrix;
     Vertex[] vertexsList;
     public int curN;
-    private Queue queue = new Queue();
-    private int [] from = new int[maxN];
+    private final Queue queue = new Queue();
+    private final int [] from = new int[maxN];
+    private boolean isClose = true;
+    private int positionSacrifice;
+    private int goalSacrifice;
 
-    public AlgoritmForFindingWay() {
+    public AlgoritmForFindingWay(int [][] map) {
         vertexsList = new Vertex[maxN];
-        matrix = new int [maxN][maxN]; //todo add matrix
+        matrix = map;
         curN = 0;
         addVertexes();
     }
@@ -21,36 +24,52 @@ public class AlgoritmForFindingWay { //todo delete all print
     }
 
     public Integer check(int v){
-                //todo v
-            v
-            int x = 23;
-            int y = 3;
+            int x;
+            int y;
+            if (v <= 9) {
+                x = 0;
+                y = v;
+            } else {
+                y = v % 10;
+                x = (int) ((v - y) * 0.1);
+            }
 
             if(x - 1 != -1){
-                System.out.println(matrix[x-1][y]);
                 int res = Integer.parseInt((x-1) + "" + y);
-                if(matrix[x-1][y] == 0 && vertexsList[res].isVisited == false){ // unvisited and is empty
+                if(matrix[x-1][y] == goalSacrifice){
+                    positionSacrifice = res;
+                    return res;
+                }else if(matrix[x-1][y] == 0 && !vertexsList[res].isVisited){    // unvisited and is empty(0 mean that field is empty)
                     return res;
                 }
             }
             if(x + 1 != 10){
-                System.out.println(matrix[x+1][y]);
-                int res = Integer.parseInt((x+1) + "" + y);
-                if(matrix[x+1][y] == 0 && vertexsList[res].isVisited == false){ // unvisited and is empty
+                int res = Integer.parseInt((x + 1) + "" + y);
+                if(matrix[x + 1][y] == goalSacrifice){
+                    positionSacrifice = res;
+                    return res;
+                }
+                if(matrix[x + 1][y] == 0 && !vertexsList[res].isVisited){
                     return res;
                 }
             }
             if(y - 1 != -1){
-                System.out.println(matrix[x][y-1]);
                 int res = Integer.parseInt(x + "" + (y-1));
-                if(matrix[x][y-1] == 0 && vertexsList[res].isVisited == false){ // unvisited and is empty
+                if(matrix[x][y - 1] == goalSacrifice){
+                    positionSacrifice = res;
+                    return res;
+                }
+                if(matrix[x][y - 1] == 0 && !vertexsList[res].isVisited){
                     return res;
                 }
             }
             if(y + 1 != 10){
-                System.out.println(matrix[x][y+1]);
                 int res = Integer.parseInt(x + "" + (y+1));
-                if(matrix[x][y+1] == 0 && vertexsList[res].isVisited == false){ // unvisited and is empty
+                if(matrix[x][y + 1] == goalSacrifice){
+                    positionSacrifice = res;
+                    return res;
+                }
+                if(matrix[x][y + 1] == 0 && !vertexsList[res].isVisited){ // unvisited and is empty
                     return res;
                 }
             }
@@ -60,10 +79,13 @@ public class AlgoritmForFindingWay { //todo delete all print
 
 
 
-    public int passInWidth(int index){
+    public int passInWidth(int index,int goalSacrifice){
+        this.goalSacrifice = goalSacrifice;
         vertexsList[index].isVisited = true;
         from[index] = -1;
+        isClose = true;
         queue.insert(index);
+
 
         int vertex;
 
@@ -72,34 +94,40 @@ public class AlgoritmForFindingWay { //todo delete all print
 
 
             while ((vertex = check(temp)) != -1){
-
-                vertexsList[vertex].isVisited = true;
+                System.out.println(vertex);
                 from[vertex] = temp;
+                if(positionSacrifice != 0){
+                    break;
+                }
+                vertexsList[vertex].isVisited = true;
                 queue.insert(vertex);
             }
-        }
 
-        for (int j = 0; j < vertexsList.length; ++j){
-            for (int i = 0; i < vertexsList.length; ++i) {
-                System.out.print(matrix[i][j] + " ");
+            if (positionSacrifice != 0){
+                break;
             }
-            System.out.println();
+            isClose = false;
         }
-
-        int nextMovePosition = from[index];   //todo right
-        for(int i = 0;i < curN; i++){
-            vertexsList[i].isVisited = false;
-//            from[i] = i; todo normal
-        }
-        return 0;
+        cleanVertexList();
+        return  getNextField(positionSacrifice);
 
     }
-    public void checkRoad(int finish){ //todo delete after testing
-        System.out.println("\n===========================\n");
-        while (from[finish] != -1) {
+    private void cleanVertexList(){
+        for(int i = 0;i < curN; i++){
+            vertexsList[i].isVisited = false;
+        }
+    }
 
-//            System.out.println(from[finish] + " " + vertexsList[from[finish]].name);
+    public int getNextField(int finish){
+        int result = -1;
+        while (from[finish] != -1) {
+            result = finish;
             finish = from[finish];
         }
+        if(isClose) {
+            return 0;
+        }
+        return result;
+
     }
 }

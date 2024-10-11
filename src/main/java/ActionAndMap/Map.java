@@ -42,8 +42,10 @@ public class Map {
                     this.entities.get(i).setPositionY(positionY);
                     if(this.entities.get(i) instanceof Predator){   //add predator
                         map[positionX][positionY] = 2;
+                        System.out.println(positionX + " " + positionY );
                     }else if(this.entities.get(i) instanceof Herbivore){    //add herbivore
                         map[positionX][positionY] = 3;
+                        System.out.println(positionX + " " + positionY );
                     }//todo add grass and rocks
                     break;
                 }
