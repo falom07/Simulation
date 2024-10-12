@@ -1,19 +1,21 @@
 package Objects;
 
 public class Predator extends Creature {
-    private static final String PREDATOR_MODEL = "\u001B[107m" + " \uD83D\uDC05 " + "\u001B[0m";
+
 
     public Predator(int positionX, int positionY, int health, int speed) {
+
         super(positionX, positionY, health, speed);
     }
-    public void attack(){}
-
-    public String getModel() {
-        return PREDATOR_MODEL;
+    public int attack(){
+        return (int) ( 1 +(Math.random() * 3));
     }
-
     @Override
     public void makeMove() {
 
+    }
+    @Override
+    public int getSpeed() {
+        return super.getSpeed();
     }
 }

@@ -1,8 +1,8 @@
 package AlgoritmForFindWay;
 
 public class Queue {
-    private int size = 101;
-    private int [] array = new int[size];
+    private final int size = 101;
+    private final int [] array = new int[size];
     private int head;
     private int tail;
     private int count;

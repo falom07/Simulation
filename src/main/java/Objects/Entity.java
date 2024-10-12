@@ -12,6 +12,14 @@ public abstract class Entity {
     public int getPositionX() {
         return positionX;
     }
+    public void addHealth(int health) {}
+    public boolean loseHealth(int damage){
+        return false;
+    }
+    public abstract int getSpeed() ;
+
+
+
 
     public void setPositionX(int positionX) {
         this.positionX = positionX;
@@ -24,5 +32,4 @@ public abstract class Entity {
     public void setPositionY(int positionY) {
         this.positionY = positionY;
     }
-    public abstract String getModel();
 }

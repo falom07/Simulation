@@ -5,19 +5,19 @@ public class AlgoritmForFindingWay { //todo delete all print
     public int [][] matrix;
     Vertex[] vertexsList;
     public int curN;
-    private final Queue queue = new Queue();
     private final int [] from = new int[maxN];
-    private boolean isClose = true;
+    private boolean isClose;
     private int positionSacrifice;
+    private int positionSacrificeForEat;
     private int goalSacrifice;
 
-    public AlgoritmForFindingWay(int [][] map) {
+    public AlgoritmForFindingWay() {
         vertexsList = new Vertex[maxN];
-        matrix = map;
+        isClose = true;
         curN = 0;
         addVertexes();
     }
-    public void addVertexes() {
+    private void addVertexes() {
         for (int i = 0; i < maxN; ++i) {
             vertexsList[curN++] = new Vertex();
         }
@@ -27,9 +27,11 @@ public class AlgoritmForFindingWay { //todo delete all print
             int x;
             int y;
             if (v <= 9) {
-                x = 0;
+
                 y = v;
+                x = 0;
             } else {
+
                 y = v % 10;
                 x = (int) ((v - y) * 0.1);
             }
@@ -79,11 +81,13 @@ public class AlgoritmForFindingWay { //todo delete all print
 
 
 
-    public int passInWidth(int index,int goalSacrifice){
+    public int passInWidth(int index,int goalSacrifice,int [][]map){
+        matrix = map;
         this.goalSacrifice = goalSacrifice;
+        Queue queue = new Queue();
         vertexsList[index].isVisited = true;
         from[index] = -1;
-        isClose = true;
+
         queue.insert(index);
 
 
@@ -94,7 +98,6 @@ public class AlgoritmForFindingWay { //todo delete all print
 
 
             while ((vertex = check(temp)) != -1){
-                System.out.println(vertex);
                 from[vertex] = temp;
                 if(positionSacrifice != 0){
                     break;
@@ -108,26 +111,35 @@ public class AlgoritmForFindingWay { //todo delete all print
             }
             isClose = false;
         }
-        cleanVertexList();
+
         return  getNextField(positionSacrifice);
 
     }
-    private void cleanVertexList(){
+    private void cleanAllForNextPassInWidth(){
+        positionSacrificeForEat = positionSacrifice;
+        positionSacrifice = 0;
+        isClose = true;
         for(int i = 0;i < curN; i++){
             vertexsList[i].isVisited = false;
+            from[i] = 0;
         }
+
     }
 
     public int getNextField(int finish){
         int result = -1;
         while (from[finish] != -1) {
+            System.out.println(finish + " " + from[finish]);
             result = finish;
             finish = from[finish];
         }
         if(isClose) {
-            return 0;
+            result = 0;
         }
+        cleanAllForNextPassInWidth();
         return result;
-
+    }
+    public int getPositionSacrificeForEat(){
+        return positionSacrificeForEat;
     }
 }
