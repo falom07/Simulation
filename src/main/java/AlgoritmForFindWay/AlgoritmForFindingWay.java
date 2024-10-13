@@ -19,17 +19,16 @@ public class AlgoritmForFindingWay { //todo delete all print
         curN = 0;
         addVertexes();
     }
-    private void addVertexes() {
+    private void addVertexes() { //create list for know what are already visite
         for (int i = 0; i < maxN; ++i) {
             vertexsList[curN++] = new Vertex();
         }
     }
 
-    public Integer check(int v){
+    public Integer check(int v){ //check if we have not visited field close us
             int x;
             int y;
-            if (v <= 9) {
-
+            if (v <= 9) { //divide our pos for x and y
                 y = v;
                 x = 0;
             } else {
@@ -38,9 +37,9 @@ public class AlgoritmForFindingWay { //todo delete all print
                 x = (int) ((v - y) * 0.1);
             }
 
-            if(x - 1 != -1){
+            if(x - 1 != -1){ //check neighbors corner if we have them
                 int res = Integer.parseInt((x-1) + "" + y);
-                if(matrix[x-1][y] == goalSacrifice){
+                if(matrix[x-1][y] == goalSacrifice){ //if we find our sacrifice we break search and return position or road for move
                     positionSacrifice = res;
                     return res;
                 }else if(matrix[x-1][y] == 0 && !vertexsList[res].isVisited){    // unvisited and is empty(0 mean that field is empty)
@@ -96,7 +95,7 @@ public class AlgoritmForFindingWay { //todo delete all print
 
         int vertex;
 
-        while(!queue.isEmpty()){
+        while(!queue.isEmpty()){ //search while we have element in queue
             int temp = queue.remove();
             int zero = 0;
 
@@ -105,7 +104,7 @@ public class AlgoritmForFindingWay { //todo delete all print
 
 
                 from[vertex] = temp;
-                if(positionSacrifice != 0){
+                if(positionSacrifice != 0){ //if we find sacrifice return pos or wau for achieve him
                     break;
                 }
                 vertexsList[vertex].isVisited = true;
@@ -121,7 +120,7 @@ public class AlgoritmForFindingWay { //todo delete all print
         return  getNextField(positionSacrifice);
 
     }
-    private void cleanAllForNextPassInWidth(){
+    private void cleanAllForNextPassInWidth(){ //cleat all for next pass in width
         positionSacrificeForEat = positionSacrifice;
         positionSacrifice = 0;
         isClose = true;
@@ -132,7 +131,7 @@ public class AlgoritmForFindingWay { //todo delete all print
 
     }
 
-    public int getNextField(int finish){
+    public int getNextField(int finish){ //return 100 if we can not move,0 if we can shoot,and position where we should move
         int result = -1;
 
         while (from[finish] != -1) {
@@ -151,7 +150,7 @@ public class AlgoritmForFindingWay { //todo delete all print
         cleanAllForNextPassInWidth();
         return result;
     }
-    public int getPositionSacrificeForEat(){
+    public int getPositionSacrificeForEat(){ //take position for eat
         return positionSacrificeForEat;
     }
 }

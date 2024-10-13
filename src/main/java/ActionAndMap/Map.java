@@ -8,7 +8,7 @@ import java.util.List;
 public class Map {
     private int[][] map = new int[10][10];
     private List<Entity> entities = new ArrayList<>();
-    private static final String HERBIVORE_MODEL = "\u001B[107m" + " \uD83D\uDC07 " + "\u001B[0m";
+    private static final String HERBIVORE_MODEL = "\u001B[107m" + " \uD83D\uDC07 " + "\u001B[0m"; //it how will be look our model
     private static final String PREDATOR_MODEL = "\u001B[107m" + " \uD83D\uDC05 " + "\u001B[0m";
     private static final String GRASS_MODEL = "\u001B[107m" + " \uD83C\uDF3F " + "\u001B[0m";
     private static final String ROCK_MODEL = "\u001B[107m" + " \uD83D\uDD32 " + "\u001B[0m";
@@ -17,7 +17,7 @@ public class Map {
 
 
 
-    public void createEntityForMap(){
+    public void createAndAddEntityForMap(){ //create and add entity to map
         Herbivore herbivore = new Herbivore(0,0,2,1);
         Herbivore herbivore2 = new Herbivore(0,0,3,1);
         Herbivore herbivore3 = new Herbivore(0,0,1,2);
@@ -59,16 +59,16 @@ public class Map {
         entities.add(grass4);
         entities.add(grass5);
     }
-    public void addEntityToMatrix(){
+    public void addEntityToMatrix(){ //add entity to matrix for show map
         int positionX;
         int positionY;
 
         for(int i = 0; entities.size() > i; i++){
 
             while (true){
-                positionX = (int) (Math.random() * 10);
+                positionX = (int) (Math.random() * 10); //random coordinates
                 positionY = (int) (Math.random() * 10);
-                if(map[positionX][positionY] == 0){
+                if(map[positionX][positionY] == 0){ //if these coordinates already exist try to take again new coordinates
                     this.entities.get(i).setPositionX(positionX);    //add position to objects - X and Y
                     this.entities.get(i).setPositionY(positionY);
                     if(this.entities.get(i) instanceof Predator){   //add predator
@@ -90,7 +90,7 @@ public class Map {
     }
 
 
-    public void showMap(){
+    public void showMap(){ //show map
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 if (map[i][j] != 0) {
@@ -113,13 +113,13 @@ public class Map {
         }
         System.out.println();
     }
-    public int[][] getMap() {
+    public int[][] getMap() { //get map
         return map;
     }
-    public List<Entity> getEntities() {
+    public List<Entity> getEntities() { //get entities,i think it is extra
         return entities;
     }
-    public void updatePositionOnMap(int from, int to, int who){
+    public void updatePositionOnMap(int from, int to, int who){ //update position on matrix
         int[] pos = takePositions(from,to);
         int xFrom = pos[0];
         int yFrom = pos[1];
@@ -129,7 +129,7 @@ public class Map {
         map[xTo][yTo] = who;
 
     }
-    public int[] takePositions(int from,int to){
+    public int[] takePositions(int from,int to){  //convert position for map
         int [] pos = new int[4];
         int [] wheare = new int[2];
         wheare[0] = from;
@@ -149,7 +149,7 @@ public class Map {
 
         return pos;
     }
-    public void respawn(int positionInList,int who){
+    public void respawn(int positionInList,int who){  // respawn grass and herbivore
         while(true){
         int positionX = (int) (Math.random() * 10);
         int positionY = (int) (Math.random() * 10);
@@ -165,7 +165,7 @@ public class Map {
         }
 
     }
-    public int findPositionEntity(int positionOnMap){
+    public int findPositionEntity(int positionOnMap){ //find entity by them positions
         int[] pos = takePositions(positionOnMap,0);
         for(int i = 0;i < entities.size();++i){
             if(pos[0] == entities.get(i).getPositionX() && pos[1] == entities.get(i).getPositionY()){
