@@ -9,10 +9,12 @@ public class Simulation {
         action.turnAction();
         countOfSteps++;
     }
-    public void startSimulation(){
+    public void startSimulation() throws InterruptedException {
         action.initAction();
-        for(int i = 1; i <= 20; i++){
+        for(int i = 1; i <= 1000; i++){
+            System.out.println("\ncount of steps" + countOfSteps);
             nextTurn();
+            Thread.sleep(3000);
         }
         endSimulation();
     }

@@ -1,5 +1,7 @@
 package AlgoritmForFindWay;
 
+import java.sql.SQLOutput;
+
 public class AlgoritmForFindingWay { //todo delete all print
     public int maxN = 101;
     public int [][] matrix;
@@ -88,6 +90,7 @@ public class AlgoritmForFindingWay { //todo delete all print
         vertexsList[index].isVisited = true;
         from[index] = -1;
 
+
         queue.insert(index);
 
 
@@ -95,9 +98,12 @@ public class AlgoritmForFindingWay { //todo delete all print
 
         while(!queue.isEmpty()){
             int temp = queue.remove();
+            int zero = 0;
 
 
             while ((vertex = check(temp)) != -1){
+
+
                 from[vertex] = temp;
                 if(positionSacrifice != 0){
                     break;
@@ -128,11 +134,17 @@ public class AlgoritmForFindingWay { //todo delete all print
 
     public int getNextField(int finish){
         int result = -1;
+
         while (from[finish] != -1) {
-            System.out.println(finish + " " + from[finish]);
             result = finish;
             finish = from[finish];
+            if(result == 0){
+                result = 100;
+                break;
+            }
         }
+
+
         if(isClose) {
             result = 0;
         }

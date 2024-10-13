@@ -21,6 +21,7 @@ public class Map {
         Herbivore herbivore = new Herbivore(0,0,2,1);
         Herbivore herbivore2 = new Herbivore(0,0,3,1);
         Herbivore herbivore3 = new Herbivore(0,0,1,2);
+        Herbivore herbivore4 = new Herbivore(0,0,1,2);
 
         Predator predator1 = new Predator(0,0,2,2);
         Predator predator2 = new Predator(0,0,2,3);
@@ -31,35 +32,39 @@ public class Map {
         Tree tree1 = new Tree(0,0);
         Tree tree2 = new Tree(0,0);
         Tree tree3 = new Tree(0,0);
-
+        Tree tree4 = new Tree(0,0);
         Grass grass1 = new Grass(0,0);
         Grass grass2 = new Grass(0,0);
         Grass grass3 = new Grass(0,0);
         Grass grass4 = new Grass(0,0);
+        Grass grass5 = new Grass(0,0);
+        map[0][0] = 5;//this will save for me 1000 years
 
-
-
-        entities.add(herbivore);
-        entities.add(herbivore2);
-        entities.add(herbivore3);
         entities.add(predator1);
         entities.add(predator2);
+        entities.add(herbivore);
+        entities.add(herbivore4);
+        entities.add(herbivore2);
+        entities.add(herbivore3);
         entities.add(rock1);
         entities.add(rock2);
         entities.add(rock3);
         entities.add(tree1);
         entities.add(tree2);
         entities.add(tree3);
+        entities.add(tree4);
         entities.add(grass1);
         entities.add(grass2);
         entities.add(grass3);
         entities.add(grass4);
+        entities.add(grass5);
     }
     public void addEntityToMatrix(){
         int positionX;
         int positionY;
 
         for(int i = 0; entities.size() > i; i++){
+
             while (true){
                 positionX = (int) (Math.random() * 10);
                 positionY = (int) (Math.random() * 10);
@@ -163,7 +168,7 @@ public class Map {
     public int findPositionEntity(int positionOnMap){
         int[] pos = takePositions(positionOnMap,0);
         for(int i = 0;i < entities.size();++i){
-            if(pos[0] == entities.get(i).getPositionY() && pos[1] == entities.get(i).getPositionX()){
+            if(pos[0] == entities.get(i).getPositionX() && pos[1] == entities.get(i).getPositionY()){
                 return i;
             }
         }
